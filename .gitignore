@@ -1,0 +1,5 @@
+obj/Debug/*.*
+obj/*.*
+
+bin/Debug/*.*
+bin/*.*
