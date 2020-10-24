@@ -16,7 +16,7 @@
             </MenuItem>
 
             <MenuItem Header="Consultas">
-            <!-- <MenuItem x:Name="ConsultaOrdenes" Header="Consultas Ordenes" Click="ConsultasOrdenes_Click"></MenuItem> -->
+             <MenuItem x:Name="ConsultaOrdenes" Header="Consultas Ordenes" Click="ConsultasOrdenes_Click"></MenuItem> 
         
             </MenuItem>
             </Menu>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DROrdenes.UI.Consultas;
 using DROrdenes.UI.Registros;
 
 namespace DROrdenes
@@ -34,11 +35,11 @@ namespace DROrdenes
             ventana.Show();
         }
 
-        //  private void ConsultasOrdenes_Click(object sender, RoutedEventArgs e)
-        // {
-        //     rOrdenes ventana = new rOrdenes();
-        //     ventana.Show();
-        // }
+          private void ConsultasOrdenes_Click(object sender, RoutedEventArgs e)
+         {
+             cOrdenes ventana = new cOrdenes();
+             ventana.Show();
+        }
 
 
     }
