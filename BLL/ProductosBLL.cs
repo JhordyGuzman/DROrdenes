@@ -6,28 +6,27 @@ using DROrdenes.Entidades;
 using DROrdenes.DAL;
 using System.Collections.Generic;
 
+
 namespace DROrdenes.BLL
 {
-    public class OrdenesBLL
+    public class ProductosBLL
     {
-
-        //Boton Guardar//
-        public static bool Guardar(Ordenes ordenes){
-           if(!Existe(ordenes.OrdenId))
-                return Insertar(ordenes);
+        public static bool Guardar(Productos productos){
+           if(!Existe(productos.ProductoId))
+                return Insertar(productos);
            else
-                return Modificar(ordenes);
+                return Modificar(productos);
         }
         
-        private static bool Insertar(Ordenes ordenes){
+        private static bool Insertar(Productos productos){
 
              bool paso = false;
              Contexto contexto = new Contexto();
 
             try{
                 //Agregar a la entidad que se desea ingresar al contexto
-                contexto.Ordenes.Add(ordenes);
-                var orden = contexto.Productos.Find(ordenes.OrdenId);
+                contexto.Productos.Add(productos);
+                var persona = contexto.Productos.Find(productos.ProductoId);
                 
                 paso = contexto.SaveChanges()>0;
             }
@@ -41,7 +40,7 @@ namespace DROrdenes.BLL
 
         }
 
-        private static bool Modificar(Ordenes ordenes){
+        private static bool Modificar(Productos productos){
 
             bool paso = false;
             Contexto contexto = new Contexto();
@@ -49,7 +48,7 @@ namespace DROrdenes.BLL
             try{
                 //Marcar la entidad como modificada para que 
                 //el contexto sepa como proceder
-                contexto.Entry(ordenes).State= EntityState.Modified;
+                contexto.Entry(productos).State= EntityState.Modified;
                 paso = contexto.SaveChanges()>0;
             }
             catch(Exception){
@@ -69,10 +68,10 @@ namespace DROrdenes.BLL
 
             try{
                 //Buscar La entidad que se desea eliminar
-                var ordenes = contexto.Ordenes.Find(id);
+                var prestamo = contexto.Productos.Find(id);
 
-                if(ordenes != null){
-                    contexto.Ordenes.Remove(ordenes);//Removemos la entidad
+                if(prestamo != null){
+                    contexto.Productos.Remove(prestamo);//Removemos la entidad
                     paso = contexto.SaveChanges() >0;
                 }
             }
@@ -86,13 +85,13 @@ namespace DROrdenes.BLL
             return paso;
         }
 
-        public static Ordenes Buscar(int id){
+        public static Productos Buscar(int id){
 
             Contexto contexto = new Contexto();
-            Ordenes ordenes = new Ordenes();
+            Productos prestamo = new Productos();
 
             try{
-                ordenes =contexto.Ordenes.Find(id);
+                prestamo =contexto.Productos.Find(id);
 
             }
             catch(Exception){
@@ -102,7 +101,7 @@ namespace DROrdenes.BLL
                 contexto.Dispose();
             }
 
-            return ordenes;
+            return prestamo;
 
         }
 
@@ -112,7 +111,7 @@ namespace DROrdenes.BLL
             bool encontrado = false;
 
             try{
-                encontrado = contexto.Ordenes.Any(e => e.OrdenId ==id);
+                encontrado = contexto.Productos.Any(e => e.ProductoId ==id);
             }
             catch(Exception){
                 throw;
@@ -124,14 +123,14 @@ namespace DROrdenes.BLL
             return encontrado;
         }
 
-        public static List<Ordenes> GetList(Expression<Func<Ordenes, bool>> criterio){
+        public static List<Productos> GetList(Expression<Func<Productos, bool>> criterio){
             
-            List<Ordenes> lista = new List<Ordenes>();
+            List<Productos> lista = new List<Productos>();
             Contexto contexto = new Contexto();
 
             try{
                 //obtener la lista y filtrarla segun el criterio recibido por parametro
-                lista = contexto.Ordenes.Where(criterio).ToList();
+                lista = contexto.Productos.Where(criterio).ToList();
 
             }
             catch(Exception){

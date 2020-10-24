@@ -6,29 +6,28 @@ using DROrdenes.Entidades;
 using DROrdenes.DAL;
 using System.Collections.Generic;
 
+
 namespace DROrdenes.BLL
 {
-    public class OrdenesBLL
+    public class SuplidoresBLL
     {
-
-        //Boton Guardar//
-        public static bool Guardar(Ordenes ordenes){
-           if(!Existe(ordenes.OrdenId))
-                return Insertar(ordenes);
+         public static bool Guardar(Suplidores suplidores){
+           if(!Existe(suplidores.SuplidorId))
+                return Insertar(suplidores);
            else
-                return Modificar(ordenes);
+                return Modificar(suplidores);
         }
         
-        private static bool Insertar(Ordenes ordenes){
+        private static bool Insertar(Suplidores suplidores){
 
              bool paso = false;
              Contexto contexto = new Contexto();
 
             try{
                 //Agregar a la entidad que se desea ingresar al contexto
-                contexto.Ordenes.Add(ordenes);
-                var orden = contexto.Productos.Find(ordenes.OrdenId);
-                
+                contexto.Suplidores.Add(suplidores);
+                var persona = contexto.Suplidores.Find(suplidores.SuplidorId);
+           
                 paso = contexto.SaveChanges()>0;
             }
             catch(Exception){
@@ -41,7 +40,7 @@ namespace DROrdenes.BLL
 
         }
 
-        private static bool Modificar(Ordenes ordenes){
+        private static bool Modificar(Suplidores suplidores){
 
             bool paso = false;
             Contexto contexto = new Contexto();
@@ -49,7 +48,7 @@ namespace DROrdenes.BLL
             try{
                 //Marcar la entidad como modificada para que 
                 //el contexto sepa como proceder
-                contexto.Entry(ordenes).State= EntityState.Modified;
+                contexto.Entry(suplidores).State= EntityState.Modified;
                 paso = contexto.SaveChanges()>0;
             }
             catch(Exception){
@@ -69,10 +68,10 @@ namespace DROrdenes.BLL
 
             try{
                 //Buscar La entidad que se desea eliminar
-                var ordenes = contexto.Ordenes.Find(id);
+                var prestamo = contexto.Suplidores.Find(id);
 
-                if(ordenes != null){
-                    contexto.Ordenes.Remove(ordenes);//Removemos la entidad
+                if(prestamo != null){
+                    contexto.Suplidores.Remove(prestamo);//Removemos la entidad
                     paso = contexto.SaveChanges() >0;
                 }
             }
@@ -86,13 +85,13 @@ namespace DROrdenes.BLL
             return paso;
         }
 
-        public static Ordenes Buscar(int id){
+        public static Suplidores Buscar(int id){
 
             Contexto contexto = new Contexto();
-            Ordenes ordenes = new Ordenes();
+            Suplidores prestamo = new Suplidores();
 
             try{
-                ordenes =contexto.Ordenes.Find(id);
+                prestamo =contexto.Suplidores.Find(id);
 
             }
             catch(Exception){
@@ -102,7 +101,7 @@ namespace DROrdenes.BLL
                 contexto.Dispose();
             }
 
-            return ordenes;
+            return prestamo;
 
         }
 
@@ -112,7 +111,7 @@ namespace DROrdenes.BLL
             bool encontrado = false;
 
             try{
-                encontrado = contexto.Ordenes.Any(e => e.OrdenId ==id);
+                encontrado = contexto.Suplidores.Any(e => e.SuplidorId ==id);
             }
             catch(Exception){
                 throw;
@@ -124,14 +123,14 @@ namespace DROrdenes.BLL
             return encontrado;
         }
 
-        public static List<Ordenes> GetList(Expression<Func<Ordenes, bool>> criterio){
+        public static List<Suplidores> GetList(Expression<Func<Suplidores, bool>> criterio){
             
-            List<Ordenes> lista = new List<Ordenes>();
+            List<Suplidores> lista = new List<Suplidores>();
             Contexto contexto = new Contexto();
 
             try{
                 //obtener la lista y filtrarla segun el criterio recibido por parametro
-                lista = contexto.Ordenes.Where(criterio).ToList();
+                lista = contexto.Suplidores.Where(criterio).ToList();
 
             }
             catch(Exception){

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DROrdenes.Entidades
 {
@@ -10,17 +11,14 @@ namespace DROrdenes.Entidades
 
         public int OrdenId { get; set; }
 
-        public float Cantidad { get; set; }
+        public int ProductoId { get; set; }
 
-        public Decimal Costo { get; set; }
+        public double Cantidad { get; set; }
 
+        public double Costo { get; set; }
 
+         [ForeignKey("ProductoId")]
 
-        public OrdenesDetalle(int ordenId, float cantidad, Decimal costo)
-        {
-            OrdenId = ordenId;
-            Cantidad = cantidad;
-            Costo = costo;
-        }
+        public Productos productos {get; set;} = new Productos();
     }
 }

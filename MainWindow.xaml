@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DROrdenes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Menu Principal" Height="450" Width="800">
     <Grid>
+
+        <StackPanel>
+            <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem  Header="Registros">
+                <MenuItem x:Name="RegistroOrdenes" Header="Registros Ordenes" Click="RegistrosOrdenes_Click"></MenuItem>
+
+            </MenuItem>
+
+            <MenuItem Header="Consultas">
+            <!-- <MenuItem x:Name="ConsultaOrdenes" Header="Consultas Ordenes" Click="ConsultasOrdenes_Click"></MenuItem> -->
+        
+            </MenuItem>
+            </Menu>
+        </StackPanel>
 
     </Grid>
 </Window>
