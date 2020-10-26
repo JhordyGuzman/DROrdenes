@@ -9,5 +9,6 @@ namespace DROrdenes.Entidades
         public int SuplidorId { get; set; }
 
         public String Nombres { get; set; }
+
     }
 }

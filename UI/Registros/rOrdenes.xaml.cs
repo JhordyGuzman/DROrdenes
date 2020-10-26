@@ -117,7 +117,7 @@ namespace DROrdenes.UI.Registros
                 Cantidad = Convert.ToInt32(CantidadTextBox.Text)
             };
 
-            ordenes.Monto = producto.Costo * int.Parse(CantidadTextBox.Text);
+            ordenes.Monto += producto.Costo * int.Parse(CantidadTextBox.Text);
             this.ordenes.Detalle.Add(filaDetalle);
             Cargar();
 
@@ -132,7 +132,7 @@ namespace DROrdenes.UI.Registros
             {
                 var detalle = (OrdenesDetalle)DetalleDataGrid.SelectedItem;
                     
-                ordenes.Monto = ordenes.Monto - (detalle.productos.Costo * (decimal)detalle.Cantidad);
+                ordenes.Monto -= ordenes.Monto - (detalle.productos.Costo * (decimal)detalle.Cantidad);
                 ordenes.Detalle.RemoveAt(DetalleDataGrid.SelectedIndex);
                 Cargar();
             }

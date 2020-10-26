@@ -15,7 +15,7 @@ namespace DROrdenes.Entidades
 
         public double Cantidad { get; set; }
 
-        public double Costo { get; set; }
+        public int SuplidorId { get; set; }
 
          [ForeignKey("ProductoId")]
 
