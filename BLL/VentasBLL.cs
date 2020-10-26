@@ -8,26 +8,24 @@ using System.Collections.Generic;
 
 namespace DROrdenes.BLL
 {
-    public class OrdenesBLL
+    public class VentasBLL
     {
-
-        //Boton Guardar//
-        public static bool Guardar(Ordenes ordenes){
-           if(!Existe(ordenes.OrdenId))
-                return Insertar(ordenes);
+        public static bool Guardar(Ventas ventas){
+           if(!Existe(ventas.VentaId))
+                return Insertar(ventas);
            else
-                return Modificar(ordenes);
+                return Modificar(ventas);
         }
         
-        private static bool Insertar(Ordenes ordenes){
+        private static bool Insertar(Ventas ventas){
 
              bool paso = false;
              Contexto contexto = new Contexto();
 
             try{
                 //Agregar a la entidad que se desea ingresar al contexto
-                contexto.Ordenes.Add(ordenes);
-                var orden = contexto.Ordenes.Find(ordenes.OrdenId);
+                contexto.Ventas.Add(ventas);
+                var venta = contexto.Ventas.Find(ventas.VentaId);
                 
                 paso = contexto.SaveChanges()>0;
             }
@@ -41,7 +39,7 @@ namespace DROrdenes.BLL
 
         }
 
-        private static bool Modificar(Ordenes ordenes){
+        private static bool Modificar(Ventas ventas){
 
             bool paso = false;
             Contexto contexto = new Contexto();
@@ -49,7 +47,7 @@ namespace DROrdenes.BLL
             try{
                 //Marcar la entidad como modificada para que 
                 //el contexto sepa como proceder
-                contexto.Entry(ordenes).State= EntityState.Modified;
+                contexto.Entry(ventas).State= EntityState.Modified;
                 paso = contexto.SaveChanges()>0;
             }
             catch(Exception){
@@ -69,10 +67,10 @@ namespace DROrdenes.BLL
 
             try{
                 //Buscar La entidad que se desea eliminar
-                var ordenes = contexto.Ordenes.Find(id);
+                var ventas = contexto.Ventas.Find(id);
 
-                if(ordenes != null){
-                    contexto.Ordenes.Remove(ordenes);//Removemos la entidad
+                if(ventas != null){
+                    contexto.Ventas.Remove(ventas);//Removemos la entidad
                     paso = contexto.SaveChanges() >0;
                 }
             }
@@ -86,25 +84,25 @@ namespace DROrdenes.BLL
             return paso;
         }
 
-        public static Ordenes Buscar(int id){
+        // public static Ventas Buscar(int id){
 
-            Contexto contexto = new Contexto();
-            Ordenes ordenes = new Ordenes();
+        //     Contexto contexto = new Contexto();
+        //     Ventas ventas = new Ventas();
 
-            try{
-                ordenes =contexto.Ordenes.Find(id);
+        //     try{
+        //         ventas =contexto.Ventas.Find(id);
 
-            }
-            catch(Exception){
-                throw;
-            }
-            finally{
-                contexto.Dispose();
-            }
+        //     }
+        //     catch(Exception){
+        //         throw;
+        //     }
+        //     finally{
+        //         contexto.Dispose();
+        //     }
 
-            return ordenes;
+        //     return ventas;
 
-        }
+        // }
 
         public static bool Existe(int id){
 
@@ -112,7 +110,7 @@ namespace DROrdenes.BLL
             bool encontrado = false;
 
             try{
-                encontrado = contexto.Ordenes.Any(e => e.OrdenId ==id);
+                encontrado = contexto.Ventas.Any(e => e.VentaId ==id);
             }
             catch(Exception){
                 throw;
@@ -124,15 +122,15 @@ namespace DROrdenes.BLL
             return encontrado;
         }
 
-        public static List<Ordenes> GetList(Expression<Func<Ordenes, bool>> criterio)
+        public static List<Ventas> GetList(Expression<Func<Ventas, bool>> criterio)
         {
             
-            List<Ordenes> lista = new List<Ordenes>();
+            List<Ventas> lista = new List<Ventas>();
             Contexto contexto = new Contexto();
 
             try{
                 //obtener la lista y filtrarla segun el criterio recibido por parametro
-                lista = contexto.Ordenes.Where(criterio).ToList();
+                lista = contexto.Ventas.Where(criterio).ToList();
 
             }
             catch(Exception){

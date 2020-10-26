@@ -8,20 +8,6 @@ namespace DROrdenes.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Ordenes",
-                columns: table => new
-                {
-                    OrdenId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(nullable: false),
-                    Monto = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ordenes", x => x.OrdenId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -50,6 +36,62 @@ namespace DROrdenes.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Ventas",
+                columns: table => new
+                {
+                    VentaId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    Monto = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ventas", x => x.VentaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ordenes",
+                columns: table => new
+                {
+                    OrdenId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    Monto = table.Column<decimal>(nullable: false),
+                    SuplidorId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ordenes", x => x.OrdenId);
+                    table.ForeignKey(
+                        name: "FK_Ordenes_Suplidores_SuplidorId",
+                        column: x => x.SuplidorId,
+                        principalTable: "Suplidores",
+                        principalColumn: "SuplidorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VentasDetalle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VentaId = table.Column<int>(nullable: false),
+                    Servicio = table.Column<string>(nullable: true),
+                    Precio = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VentasDetalle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VentasDetalle_Ventas_VentaId",
+                        column: x => x.VentaId,
+                        principalTable: "Ventas",
+                        principalColumn: "VentaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrdenesDetalle",
                 columns: table => new
                 {
@@ -58,7 +100,7 @@ namespace DROrdenes.Migrations
                     OrdenId = table.Column<int>(nullable: false),
                     ProductoId = table.Column<int>(nullable: false),
                     Cantidad = table.Column<double>(nullable: false),
-                    Costo = table.Column<double>(nullable: false)
+                    SuplidorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,6 +170,11 @@ namespace DROrdenes.Migrations
                 values: new object[] { 5, "Palmares" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Ordenes_SuplidorId",
+                table: "Ordenes",
+                column: "SuplidorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrdenesDetalle_OrdenId",
                 table: "OrdenesDetalle",
                 column: "OrdenId");
@@ -136,6 +183,11 @@ namespace DROrdenes.Migrations
                 name: "IX_OrdenesDetalle_ProductoId",
                 table: "OrdenesDetalle",
                 column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VentasDetalle_VentaId",
+                table: "VentasDetalle",
+                column: "VentaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -144,13 +196,19 @@ namespace DROrdenes.Migrations
                 name: "OrdenesDetalle");
 
             migrationBuilder.DropTable(
-                name: "Suplidores");
+                name: "VentasDetalle");
 
             migrationBuilder.DropTable(
                 name: "Ordenes");
 
             migrationBuilder.DropTable(
                 name: "Productos");
+
+            migrationBuilder.DropTable(
+                name: "Ventas");
+
+            migrationBuilder.DropTable(
+                name: "Suplidores");
         }
     }
 }

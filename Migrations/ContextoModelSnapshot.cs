@@ -28,7 +28,12 @@ namespace DROrdenes.Migrations
                     b.Property<decimal>("Monto")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("SuplidorId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("OrdenId");
+
+                    b.HasIndex("SuplidorId");
 
                     b.ToTable("Ordenes");
                 });
@@ -42,13 +47,13 @@ namespace DROrdenes.Migrations
                     b.Property<double>("Cantidad")
                         .HasColumnType("REAL");
 
-                    b.Property<double>("Costo")
-                        .HasColumnType("REAL");
-
                     b.Property<int>("OrdenId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SuplidorId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -158,6 +163,52 @@ namespace DROrdenes.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DROrdenes.Entidades.Ventas", b =>
+                {
+                    b.Property<int>("VentaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("VentaId");
+
+                    b.ToTable("Ventas");
+                });
+
+            modelBuilder.Entity("DROrdenes.Entidades.VentasDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Servicio")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("VentaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VentaId");
+
+                    b.ToTable("VentasDetalle");
+                });
+
+            modelBuilder.Entity("DROrdenes.Entidades.Ordenes", b =>
+                {
+                    b.HasOne("DROrdenes.Entidades.Suplidores", "suplidores")
+                        .WithMany()
+                        .HasForeignKey("SuplidorId");
+                });
+
             modelBuilder.Entity("DROrdenes.Entidades.OrdenesDetalle", b =>
                 {
                     b.HasOne("DROrdenes.Entidades.Ordenes", null)
@@ -169,6 +220,15 @@ namespace DROrdenes.Migrations
                     b.HasOne("DROrdenes.Entidades.Productos", "productos")
                         .WithMany()
                         .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DROrdenes.Entidades.VentasDetalle", b =>
+                {
+                    b.HasOne("DROrdenes.Entidades.Ventas", null)
+                        .WithMany("Detalle")
+                        .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
